@@ -27,6 +27,15 @@ public class CustomerService {
         return customerRepository.findAll();
     }
 
+    public List<Customer> findAll(String filterText) {
+        if (filterText == null || filterText.isEmpty()){
+            return customerRepository.findAll();
+        }else{
+            return customerRepository.search(filterText);
+        }
+
+    }
+
     public long count() {
         return customerRepository.count();
 
@@ -53,4 +62,4 @@ public class CustomerService {
 //        }
     }
 
-}
+

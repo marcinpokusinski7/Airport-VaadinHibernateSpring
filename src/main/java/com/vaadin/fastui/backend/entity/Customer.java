@@ -31,4 +31,9 @@ public class Customer extends AbstractEntity implements Cloneable {
     @NotNull
     @NotEmpty
     private String email;
+
+    @Column(name = "phone_number")
+    @NotEmpty
+    @NotNull
+    private String phoneNumber;
 }
