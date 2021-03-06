@@ -2,20 +2,23 @@ package com.vaadin.fastui.backend.entity;
 
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-@EqualsAndHashCode(callSuper = true)
+
 @Entity
 @Table(name = "customer")
 @Data
 @NoArgsConstructor
-public class Customer extends AbstractEntity implements Cloneable {
+public class Customer implements Cloneable {
 
+    @Id
+    @Column(name = "customer_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer customerId;
 
     @Column(name = "first_name")
     @NotNull
@@ -36,4 +39,12 @@ public class Customer extends AbstractEntity implements Cloneable {
     @NotEmpty
     @NotNull
     private String phoneNumber;
+
+//    @ManyToMany(fetch = FetchType.EAGER,
+//    cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+//    @JoinTable(name="customer_flight",
+//    joinColumns = @JoinColumn(name="customer_id"),
+//    inverseJoinColumns = @JoinColumn(name="flight_id"))
+//    private List<Customer> customerList;
+
 }

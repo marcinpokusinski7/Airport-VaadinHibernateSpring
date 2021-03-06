@@ -7,7 +7,9 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -54,12 +56,13 @@ public class CustomerService {
         customerRepository.save(customer);
     }
 
-//    public void getId(List<Customer> customerList){
-//        for(Customer customer: customerList){
-//           customerList(getId(customer));
-//
-//            }
-//        }
+    public Map<String, Integer> getStats() {
+        HashMap<String, Integer> stats = new HashMap<>();
+        findAll().forEach(customer ->
+                stats.put(customer.getEmail(), customer.getCustomerId()));
+        return stats;
+    }
+
     }
 
 

@@ -1,9 +1,10 @@
-package com.vaadin.fastui.ui;
+package com.vaadin.fastui.ui.views.lists;
 
 import com.vaadin.fastui.backend.entity.Customer;
 import com.vaadin.fastui.backend.service.CustomerService;
+import com.vaadin.fastui.ui.MainLayout;
+import com.vaadin.fastui.ui.views.dashboard.CustomerForm;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -19,7 +20,7 @@ import com.vaadin.flow.router.Route;
 public class ListView extends VerticalLayout {
 
     private final CustomerForm customerForm;
-    Dialog dialog = new Dialog();
+
     Grid<Customer> grid = new Grid<>(Customer.class);
     TextField filterText = new TextField();
     private CustomerService customerService;
@@ -83,7 +84,7 @@ public class ListView extends VerticalLayout {
     private void configureGrid() {
         grid.addClassName("customer-grid");
         grid.setSizeFull(); // full screen
-        grid.setColumns("id", "firstName", "lastName", "email", "phoneNumber"); // order columns by names
+        grid.setColumns("customerId", "firstName", "lastName", "email", "phoneNumber"); // order columns by names
         grid.getColumns().forEach(col -> col.setAutoWidth(true)); // automatic width
 
         grid.asSingleSelect().addValueChangeListener(event -> editCustomer(event.getValue()));

@@ -1,4 +1,4 @@
-package com.vaadin.fastui.ui;
+package com.vaadin.fastui.ui.views.dashboard;
 
 import com.vaadin.fastui.backend.entity.Customer;
 import com.vaadin.flow.component.ComponentEvent;
