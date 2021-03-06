@@ -2,19 +2,21 @@ package com.vaadin.fastui.ui;
 
 import com.vaadin.fastui.backend.entity.Customer;
 import com.vaadin.fastui.backend.service.CustomerService;
-import com.vaadin.flow.component.dependency.CssImport;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
+import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
 
-@Route("")
-@CssImport("./styles/shared-styles.css")
-public class MainView extends VerticalLayout {
+@Route(value = "", layout = MainLayout.class)
+@PageTitle("Customer List")
+public class ListView extends VerticalLayout {
 
     private final CustomerForm customerForm;
     Dialog dialog = new Dialog();
@@ -22,16 +24,17 @@ public class MainView extends VerticalLayout {
     TextField filterText = new TextField();
     private CustomerService customerService;
 
-    public MainView(CustomerService customerService) {
+    public ListView(CustomerService customerService) {
         this.customerService = customerService;
         addClassName("list-view");
         setSizeFull();
         configureGrid();
-        configureFilter();
+        getToolBar();
 
         customerForm = new CustomerForm(customerService.findAll());
         customerForm.addListener(CustomerForm.SaveEvent.class, this::saveContact);
-        customerForm.addListener(CustomerForm.DeleteEvent.class,this::deleteContact);
+        customerForm.addListener(CustomerForm.DeleteEvent.class, this::deleteContact);
+        customerForm.addListener(CustomerForm.CloseEvent.class, e -> closeEditor());
 
         new Div(grid, customerForm);
 
@@ -39,14 +42,35 @@ public class MainView extends VerticalLayout {
         content.addClassName("content");
         content.setSizeFull();
 
-        add(filterText, content);
+        add(getToolBar(), content);
         updateList();
         closeEditor();
-        //deleteCustomer();
+
+    }
+
+    private HorizontalLayout getToolBar() {
+        filterText.setPlaceholder("Filter by name...");
+        filterText.setClearButtonVisible(true);
+        filterText.setValueChangeMode(ValueChangeMode.LAZY);
+        filterText.addValueChangeListener(e -> updateList()); //everytime value in button changes it updates list
+
+        Button addContactButton = new Button("Add contact", click -> addCustomer());
+
+        HorizontalLayout toolbar = new HorizontalLayout(filterText, addContactButton);
+        toolbar.addClassName("toolbar");
+        return toolbar;
+
+    }
+
+    private void addCustomer() {
+        grid.asSingleSelect().clear();
+        editCustomer(new Customer());
     }
 
     private void deleteContact(CustomerForm.DeleteEvent evt) {
-
+        customerService.delete(evt.getCustomer());
+        updateList();
+        closeEditor();
     }
 
 
@@ -66,20 +90,13 @@ public class MainView extends VerticalLayout {
     }
 
     private void editCustomer(Customer customer) {
-        if(customer == null){
+        if (customer == null) {
             closeEditor();
-        }else{
+        } else {
             customerForm.setCustomer(customer);
             customerForm.setVisible(true);
             addClassName("editing");
         }
-    }
-
-    private void configureFilter() {
-        filterText.setPlaceholder("Filter by name...");
-        filterText.setClearButtonVisible(true);
-        filterText.setValueChangeMode(ValueChangeMode.LAZY);
-        filterText.addValueChangeListener(e -> updateList()); //everytime value in button changes it updates list
     }
 
     private void closeEditor() {
@@ -93,11 +110,4 @@ public class MainView extends VerticalLayout {
         grid.setItems(customerService.findAll(filterText.getValue()));
     }
 
-//    private void deleteCustomer() {
-//
-//        GridMultiSelectionModel<Customer> selectionModel =
-//                (GridMultiSelectionModel<Customer>)
-//                        grid.setSelectionMode(Grid.SelectionMode.MULTI);
-//
-//    }
 }
