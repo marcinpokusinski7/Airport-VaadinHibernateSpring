@@ -36,8 +36,33 @@ a[highlight] {
     display: none;
   }
 }
+/*dashboard view*/
 
-.dashboard-view .customer-stats{
-  font-size: 4em;
-  margin: 1em 0;
+
+.dashboard-view .h1{
+  text-align: center;
+
+}
+
+.dashboard-view .ordered-layout{
+  padding: var(--lumo-space-m);
+  background:#Fcfcf9;
+  max-width: 1100px;
+  margin: auto;
+  text-align: center;
+  border: white 1px;
+}
+
+/* image */
+.maxSize500 {
+max-width: 500px;
+max-height: 500px;
+
+}
+
+.verticalLayout{
+  background:#F3F5F7;
+}
+.goTo{
+  margin-top: 50px;
 }

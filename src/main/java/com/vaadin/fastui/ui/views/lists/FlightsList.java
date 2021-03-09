@@ -9,6 +9,8 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
+import java.io.IOException;
+
 @Route(value = "flights", layout = MainLayout.class)
 @PageTitle("FlightsList")
 public class FlightsList extends VerticalLayout {
@@ -16,21 +18,23 @@ public class FlightsList extends VerticalLayout {
     private FlightService flightService;
     private ApiCityPhotosService apiCityPhotosService;
     Grid<Flight> flightGrid = new Grid<>(Flight.class);
-   /* TextField areoplaneFlightId = new TextField();
-    TextField fromCity = new TextField();
-    TextField toCity = new TextField();
-    TextArea seatsLeft = new TextArea();
+//    Image image = new Image(apiCityPhotosService.getImage(), "city");
 
-    Button add = new Button("Add");
-    Button delete = new Button("Delete");
-*/
-    public FlightsList(FlightService flightService) {
+
+    /* TextField areoplaneFlightId, = new TextField();
+     TextField fromCity = new TextField();
+     TextField toCity = new TextField();
+     TextArea seatsLeft = new TextArea();
+ 
+     Button add = new Button("Add");
+     Button delete = new Button("Delete");
+ */
+    public FlightsList(FlightService flightService, ApiCityPhotosService apiCityPhotosService) throws IOException {
         this.flightService = flightService;
-        addClassName("flight-view");
+        this.apiCityPhotosService = apiCityPhotosService;
+        addClassName("list-view");
         setSizeFull();
         configureGrid();
-
-
         add(flightGrid);
         updateList();
 
@@ -43,10 +47,22 @@ public class FlightsList extends VerticalLayout {
     }
 
     private void configureGrid() {
-            flightGrid.addClassName("flight-grid");
-            flightGrid.setSizeFull();
-            flightGrid.setColumns("fromCity", "toCity","price", "seatsLeft", "date");
-
+        flightGrid.addClassName("flight-grid");
+        flightGrid.setSizeFull();
+        flightGrid.setColumns("fromCity", "toCity", "price", "seatsLeft", "date");
     }
+//    private void photoGrid(){
+//        flightGrid.addColumn(new ComponentRenderer<>(p-> {
+//            Image image = null;
+//            try {
+//                image = new Image(apiCityPhotosService.getImage(), "city");
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            return image;
+//        })).setHeader("Photo");
+//
+//    }
+
 
 }

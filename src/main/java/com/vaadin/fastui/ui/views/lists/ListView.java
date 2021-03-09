@@ -3,7 +3,7 @@ package com.vaadin.fastui.ui.views.lists;
 import com.vaadin.fastui.backend.entity.Customer;
 import com.vaadin.fastui.backend.service.CustomerService;
 import com.vaadin.fastui.ui.MainLayout;
-import com.vaadin.fastui.ui.views.dashboard.CustomerForm;
+import com.vaadin.fastui.ui.views.forms.CustomerForm;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
@@ -15,7 +15,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
 
-@Route(value = "", layout = MainLayout.class)
+@Route(value = "list", layout = MainLayout.class)
 @PageTitle("Customer List")
 public class ListView extends VerticalLayout {
 

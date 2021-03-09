@@ -10,7 +10,8 @@ import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.tabs.Tab;
+import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.router.HighlightConditions;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.theme.Theme;
@@ -35,7 +36,6 @@ public class MainLayout extends AppLayout {
         header.addClassName("header");
         header.setWidth("100%");
         header.setDefaultVerticalComponentAlignment(FlexComponent.Alignment.CENTER);
-
         addToNavbar(header);
     }
 
@@ -44,13 +44,10 @@ public class MainLayout extends AppLayout {
         RouterLink flightLink = new RouterLink("Flights List", FlightsList.class);
         flightLink.setHighlightCondition(HighlightConditions.sameLocation());
         listLink.setHighlightCondition(HighlightConditions.sameLocation());
-
-        addToDrawer(new VerticalLayout(
-                new RouterLink("Dashboard", DashboardView.class),
-                flightLink,
-                listLink
-
-        ));
+        Tabs tabs = new Tabs(new Tab(new RouterLink("Dashboard", DashboardView.class)), new Tab(flightLink), new Tab(listLink));
+        tabs.setOrientation(Tabs.Orientation.VERTICAL);
+        setDrawerOpened(false);
+        addToDrawer(tabs);
 
     }
 

@@ -1,43 +1,35 @@
 package com.vaadin.fastui.backend.service;
 
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.json.JsonMapper;
-import org.atmosphere.config.service.Post;
+import com.google.gson.Gson;
+import com.vaadin.fastui.backend.POJO.Hit;
+import com.vaadin.fastui.backend.POJO.PixaBay;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.expression.spel.ast.TypeReference;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.stereotype.Service;
 
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.util.Collections;
-import java.util.List;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
 
-
+@Service
 public class ApiCityPhotosService {
     private FlightService flightService;
-
+    private String temp = "";
     @Value("${api.key}")
     private String apiKey;
 
-    private String POSTS_API_URL = "https://pixabay.com/api/?key=" +apiKey +"&q=france&image_type=photo";
 
+    public String getImage(String city) throws IOException {
 
-    @RequestMapping("/movie")
-   public void getImage(){
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .GET()
-                .header("accept","application/json")
-                .uri(URI.create(POSTS_API_URL))
-                .build();
-        HttpResponse<String> response = client.send(request, ,HttpResponse.BodyHandlers.ofString());
+        URL url = new URL("https://pixabay.com/api/?key=" + apiKey + "&q="+city+"&per_page=3");
+        InputStreamReader reader = new InputStreamReader(url.openStream());
+        PixaBay pixaBay = new Gson().fromJson(reader, PixaBay.class);
 
-        ObjectMapper mapper = new JsonMapper();
-//        List<Post> posts = mapper.readValue(response.body(), new TypeReference<List<Post>>());
-        posts.forEach(System.out::println);
+        for (Hit hit : pixaBay.getHits()) {
+            temp = hit.getWebformatURL();
+        }
+        URL url1 = new URL(temp);
+        return url1.toString();
     }
 
 
