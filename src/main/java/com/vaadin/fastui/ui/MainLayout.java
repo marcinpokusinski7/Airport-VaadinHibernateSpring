@@ -1,6 +1,6 @@
 package com.vaadin.fastui.ui;
 
-import com.vaadin.fastui.ui.views.dashboard.DashboardView;
+import com.vaadin.fastui.ui.views.dashboard.ExampleDestinations;
 import com.vaadin.fastui.ui.views.lists.FlightsList;
 import com.vaadin.fastui.ui.views.lists.ListView;
 import com.vaadin.flow.component.applayout.AppLayout;
@@ -44,7 +44,7 @@ public class MainLayout extends AppLayout {
         RouterLink flightLink = new RouterLink("Flights List", FlightsList.class);
         flightLink.setHighlightCondition(HighlightConditions.sameLocation());
         listLink.setHighlightCondition(HighlightConditions.sameLocation());
-        Tabs tabs = new Tabs(new Tab(new RouterLink("Dashboard", DashboardView.class)), new Tab(flightLink), new Tab(listLink));
+        Tabs tabs = new Tabs(new Tab(flightLink), new Tab(listLink), new Tab(new RouterLink("Example Destination", ExampleDestinations.class)));
         tabs.setOrientation(Tabs.Orientation.VERTICAL);
         setDrawerOpened(false);
         addToDrawer(tabs);

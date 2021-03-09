@@ -17,7 +17,7 @@ import java.io.IOException;
 
 @PageTitle("Dashboard")
 @Route(value = "", layout = MainLayout.class)
-public class DashboardView extends VerticalLayout {
+public class ExampleDestinations extends VerticalLayout {
     private CustomerService customerService;
     private ApiCityPhotosService apiCityPhotosService;
 
@@ -27,8 +27,8 @@ public class DashboardView extends VerticalLayout {
     Button goTo = new Button("Check Price");
     Button goTo2 = new Button("Check Price");
     Button goTo3 = new Button("Check Price");
-    public DashboardView(CustomerService customerService,
-    ApiCityPhotosService apiCityPhotosService) throws IOException {
+    public ExampleDestinations(CustomerService customerService,
+                               ApiCityPhotosService apiCityPhotosService) throws IOException {
         this.customerService = customerService;
         this.apiCityPhotosService = apiCityPhotosService;
 
