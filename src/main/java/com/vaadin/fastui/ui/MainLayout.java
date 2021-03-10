@@ -45,6 +45,7 @@ public class MainLayout extends AppLayout {
         flightLink.setHighlightCondition(HighlightConditions.sameLocation());
         listLink.setHighlightCondition(HighlightConditions.sameLocation());
         Tabs tabs = new Tabs(new Tab(flightLink), new Tab(listLink), new Tab(new RouterLink("Example Destination", ExampleDestinations.class)));
+        tabs.addClassName("tabs-drawer");
         tabs.setOrientation(Tabs.Orientation.VERTICAL);
         setDrawerOpened(false);
         addToDrawer(tabs);

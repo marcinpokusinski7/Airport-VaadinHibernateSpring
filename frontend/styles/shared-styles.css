@@ -15,6 +15,7 @@ a[highlight] {
 }
 
 
+
 /* List view */
 .list-view .content {
   display: flex;
@@ -66,3 +67,6 @@ max-height: 500px;
 .goTo{
   margin-top: 50px;
 }
+
+/*reservationpage*/
+

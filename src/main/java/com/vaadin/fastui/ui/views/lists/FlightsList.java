@@ -4,6 +4,7 @@ import com.vaadin.fastui.backend.entity.Flight;
 import com.vaadin.fastui.backend.service.ApiCityPhotosService;
 import com.vaadin.fastui.backend.service.FlightService;
 import com.vaadin.fastui.ui.MainLayout;
+import com.vaadin.fastui.ui.views.dashboard.ReservationPage;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -23,6 +24,7 @@ public class FlightsList extends VerticalLayout {
 
     private FlightService flightService;
     private ApiCityPhotosService apiCityPhotosService;
+    private ReservationPage reservationPage;
     Grid<Flight> flightGrid = new Grid<>(Flight.class);
     Dialog dialog = new Dialog();
     Button close = new Button("Close");
@@ -67,7 +69,10 @@ public class FlightsList extends VerticalLayout {
         dialog.setHeight("400px");
         dialog.setWidth("650px");
         close.addClickListener(e -> dialog.close());
-        continueDialog.addClickListener(event -> dialog.add("Siema"));
+        continueDialog.addClickListener(e->
+                continueDialog.getUI().ifPresent(ui ->
+                        ui.navigate("flights/reservation")));
+        continueDialog.addClickListener(e-> dialog.close());
         dialog.add(close,continueDialog);
     }
 
@@ -75,6 +80,7 @@ public class FlightsList extends VerticalLayout {
         close.addThemeVariants(ButtonVariant.LUMO_ERROR);
         continueDialog.setIconAfterText(true);
     }
+
 
 
 
