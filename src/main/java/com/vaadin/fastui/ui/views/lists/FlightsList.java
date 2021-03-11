@@ -12,7 +12,10 @@ import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -29,13 +32,14 @@ public class FlightsList extends VerticalLayout {
     Dialog dialog = new Dialog();
     Button close = new Button("Close");
     Button continueDialog = new Button("Continue", new Icon(VaadinIcon.ARROW_RIGHT));
+    TextField filterText = new TextField();
 
     /* TextField areoplaneFlightId, = new TextField();
      TextField fromCity = new TextField();
      TextField toCity = new TextField();
      TextArea seatsLeft = new TextArea();
  
-     Button add = new Button("Add");
+
      Button delete = new Button("Delete");
  */
     public FlightsList(FlightService flightService, ApiCityPhotosService apiCityPhotosService) throws IOException {
@@ -46,12 +50,12 @@ public class FlightsList extends VerticalLayout {
         setSizeFull();
         configureGrid();
         configureDialog();
-        add(flightGrid);
+        add(getToolBar(),flightGrid);
         updateList();
     }
 
     private void updateList() {
-        flightGrid.setItems(flightService.findAll());
+        flightGrid.setItems(flightService.findAll(filterText.getValue()));
 
     }
 
@@ -68,6 +72,7 @@ public class FlightsList extends VerticalLayout {
         dialog.add(new Text("Close me with escape\n"));
         dialog.setHeight("400px");
         dialog.setWidth("650px");
+
         close.addClickListener(e -> dialog.close());
         continueDialog.addClickListener(e->
                 continueDialog.getUI().ifPresent(ui ->
@@ -79,6 +84,17 @@ public class FlightsList extends VerticalLayout {
     private void buttonConfigure(){
         close.addThemeVariants(ButtonVariant.LUMO_ERROR);
         continueDialog.setIconAfterText(true);
+    }
+
+    private HorizontalLayout getToolBar() {
+        filterText.setPlaceholder("Filter by city...");
+        filterText.setClearButtonVisible(true);
+        filterText.setValueChangeMode(ValueChangeMode.LAZY);
+        filterText.addValueChangeListener(e -> updateList()); //everytime value in button changes it updates list
+        HorizontalLayout toolbar = new HorizontalLayout(filterText);
+        toolbar.addClassName("toolbar");
+        return toolbar;
+
     }
 
 

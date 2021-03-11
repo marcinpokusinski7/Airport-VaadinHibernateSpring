@@ -12,6 +12,7 @@ a[highlight] {
 .header h1.logo {
   font-size: 1em;
   margin: var(--lumo-space-m);
+  child-align: middle;
 }
 
 
@@ -70,3 +71,8 @@ max-height: 500px;
 
 /*reservationpage*/
 
+.reservation-page .layout-full{
+   max-width: 1100px;
+   margin: auto;
+   text-align: center;
+ }

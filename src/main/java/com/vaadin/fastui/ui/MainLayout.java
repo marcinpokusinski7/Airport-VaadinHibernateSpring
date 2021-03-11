@@ -24,22 +24,27 @@ public class MainLayout extends AppLayout {
 
     public MainLayout() {
     createHeader();
-    createDrawer();
-    
+   createDrawer();
+
     }
 
     private void createHeader() {
-        H1 logo = new H1("Customer service");
+
+        H1 logo = new H1("Flights reservation");
+
         logo.addClassName("logo");
 
-        HorizontalLayout header = new HorizontalLayout(new DrawerToggle(), logo);
+        HorizontalLayout header = new HorizontalLayout(new DrawerToggle(),logo);
         header.addClassName("header");
         header.setWidth("100%");
         header.setDefaultVerticalComponentAlignment(FlexComponent.Alignment.CENTER);
         addToNavbar(header);
+
+
     }
 
     private void createDrawer() {
+
         RouterLink listLink = new RouterLink("Customers List", ListView.class);
         RouterLink flightLink = new RouterLink("Flights List", FlightsList.class);
         flightLink.setHighlightCondition(HighlightConditions.sameLocation());
@@ -49,8 +54,8 @@ public class MainLayout extends AppLayout {
         tabs.setOrientation(Tabs.Orientation.VERTICAL);
         setDrawerOpened(false);
         addToDrawer(tabs);
-
     }
+
 
 
 }

@@ -128,7 +128,7 @@ public class ExampleDestinations extends VerticalLayout {
         layout3.getAlignItems();
     }
 
-    public Image getImage(String city) throws IOException {
+    private Image getImage(String city) throws IOException {
 
         Image image =new Image(apiCityPhotosService.getImage(city), "city");
         image.addClassName("maxSize500");

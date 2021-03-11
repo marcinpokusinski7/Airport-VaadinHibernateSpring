@@ -29,6 +29,15 @@ public class FlightService {
         return flightRepository.findAll();
     }
 
+    public List<Flight> findAll(String filterText){
+        if(filterText == null || filterText.isEmpty()){
+            return flightRepository.findAll();
+        } else{
+            return flightRepository.search(filterText);
+        }
+
+    }
+
 
     public long count(){
         return flightRepository.count();
