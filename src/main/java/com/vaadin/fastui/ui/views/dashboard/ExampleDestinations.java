@@ -3,6 +3,7 @@ package com.vaadin.fastui.ui.views.dashboard;
 import com.vaadin.fastui.backend.service.ApiCityPhotosService;
 import com.vaadin.fastui.backend.service.CustomerService;
 import com.vaadin.fastui.ui.MainLayout;
+import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.Div;
@@ -117,18 +118,18 @@ public class ExampleDestinations extends VerticalLayout {
         Div component1 = new Div();
         Div component2 = new Div();
         component1.add(getImage("Greece"));
-        component2.setText(String.valueOf(new H1("Greece")));
+        Text text = new Text(component1.getText());
         component2.setText(t);
         goTo3.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         VerticalLayout verticalLayout = new VerticalLayout();
-        verticalLayout.add(component2, goTo3);
+        verticalLayout.add(text, component2, goTo3);
         verticalLayout.setHorizontalComponentAlignment(Alignment.END, goTo3);
         layout3.addAndExpand(component1, verticalLayout);
         layout3.setPadding(true);
         layout3.getAlignItems();
     }
 
-    private Image getImage(String city) throws IOException {
+    public Image getImage(String city) throws IOException {
 
         Image image =new Image(apiCityPhotosService.getImage(city), "city");
         image.addClassName("maxSize500");

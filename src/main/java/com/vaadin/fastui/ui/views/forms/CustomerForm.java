@@ -76,6 +76,7 @@ public class CustomerForm extends FormLayout {
     }
 
 
+
     public static abstract class CustomerFormEvent extends ComponentEvent<CustomerForm> {
         private Customer customer;
 

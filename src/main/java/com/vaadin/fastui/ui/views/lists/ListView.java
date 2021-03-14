@@ -55,9 +55,9 @@ public class ListView extends VerticalLayout {
         filterText.setValueChangeMode(ValueChangeMode.LAZY);
         filterText.addValueChangeListener(e -> updateList()); //everytime value in button changes it updates list
 
-        Button addContactButton = new Button("Add contact", click -> addCustomer());
+        Button addCustomerButton = new Button("Add customer", click -> addCustomer());
 
-        HorizontalLayout toolbar = new HorizontalLayout(filterText, addContactButton);
+        HorizontalLayout toolbar = new HorizontalLayout(filterText, addCustomerButton);
         toolbar.addClassName("toolbar");
         return toolbar;
 

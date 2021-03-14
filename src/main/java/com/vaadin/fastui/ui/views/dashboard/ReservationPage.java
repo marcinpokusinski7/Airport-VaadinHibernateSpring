@@ -20,32 +20,36 @@ public class ReservationPage extends VerticalLayout {
     private ApiCityPhotosService apiCityPhotosService;
     private MainLayout mainLayout;
     VerticalLayout layoutFull = new VerticalLayout();
-    HorizontalLayout layout = new HorizontalLayout();
-    Button confirm = new Button("Confirm");
+
     Button back = new Button("Back");
+    Button confirm = new Button("Confirm");
+
     Dialog dialog = new Dialog(new Text("siema"));
 
     public ReservationPage(ApiCityPhotosService apiCityPhotosService) throws IOException {
         this.apiCityPhotosService = apiCityPhotosService;
-
+        setSizeFull();
         addClassName("reservation-page");
         layoutFull.addClassName("layout-full");
-        setSizeFull();
+        layoutFull.setHeightFull();
 
-        configureLayout();
         configureButtonOperations();
 
-        layout.add(back, confirm);
-        layoutFull.add(configureSplitLayouts(), layout);
+        layoutFull.add(configureSplitLayouts(), configureLayoutButton());
 
         add(layoutFull);
     }
 
-    private void configureLayout() {
+    private HorizontalLayout configureLayoutButton() {
         confirm.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         back.addThemeVariants(ButtonVariant.LUMO_ERROR);
+        confirm.addClassName("confirm");
 
-        layoutFull.setHeightFull();
+        HorizontalLayout layout = new HorizontalLayout();
+        layout.setPadding(true);
+
+        layout.addAndExpand(back, confirm);
+        return layout;
     }
 
     private void configureButtonOperations() {
@@ -57,27 +61,14 @@ public class ReservationPage extends VerticalLayout {
     }
 
     private HorizontalLayout configureSplitLayouts() throws IOException {
+
         HorizontalLayout orderedLayout = new HorizontalLayout();
-
-        // Create component 1 and 2 with vertical layout
-        VerticalLayout twoScreenShoots = new VerticalLayout();
-        HorizontalLayout firstSs = new HorizontalLayout();
-        HorizontalLayout secondSs = new HorizontalLayout();
-
-        // configure horizontals
-        twoScreenShoots.add(firstSs,secondSs);
-        // create component 3 as horizontal layout
-        HorizontalLayout thirdSs = new HorizontalLayout();
-
+        orderedLayout.addClassName("firstSs");
         // add api
-        firstSs.add(retrieveCityImage("berlin"));
-        secondSs.add(retrieveCityImage("paris"));
-        thirdSs.add(retrieveCityImage("Warsaw"));
-        // add to layout
-        orderedLayout.add(twoScreenShoots,thirdSs);
+        orderedLayout.add(retrieveCityImage("Greece"));
+
         orderedLayout.setPadding(false);
         orderedLayout.setMargin(true);
-
         orderedLayout.setSpacing(true);
 
         return orderedLayout;

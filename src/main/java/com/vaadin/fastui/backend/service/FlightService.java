@@ -37,7 +37,9 @@ public class FlightService {
         }
 
     }
-
+    public Flight findById(int id){
+        return flightRepository.getOne(id);
+    }
 
     public long count(){
         return flightRepository.count();
@@ -55,4 +57,5 @@ public class FlightService {
         }
         flightRepository.save(flight);
     }
+
 }
