@@ -69,11 +69,10 @@ max-height: 500px;
 /*reservationpage*/
 
 .reservation-page .layout-full{
-  padding-left: 50px;
+  padding-left: 80px;
   padding-right: 50px;
    max-width: 1100px;
    margin: auto;
-  border: 1px solid green;
  }
 .layout-full .firstSs{
   background-size: contain;
@@ -88,5 +87,4 @@ max-height: 500px;
   margin-right: 20px;
 }
 .reservation-page {
-  border: 1px solid red;
 }

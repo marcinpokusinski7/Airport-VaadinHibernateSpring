@@ -18,9 +18,13 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import org.apache.commons.lang3.time.DateFormatUtils;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.Optional;
 
+@Component
 @Route(value = "flights", layout = MainLayout.class)
 @PageTitle("FlightsList")
 public class FlightsList extends VerticalLayout {
@@ -42,6 +46,7 @@ public class FlightsList extends VerticalLayout {
     Text datePick = new Text("");
     Text price = new Text("");
 
+    private int idValue;
     Dialog dialog = new Dialog();
     Button close = new Button("Close", new Icon(VaadinIcon.ARROW_LEFT));
     Button continueDialog = new Button("Continue", new Icon(VaadinIcon.ARROW_RIGHT));
@@ -50,6 +55,7 @@ public class FlightsList extends VerticalLayout {
     public FlightsList(FlightService flightService) throws IOException {
         this.flightService = flightService;
         addClassName("list-view");
+
 
         buttonConfigure();
         setSizeFull();
@@ -83,15 +89,35 @@ public class FlightsList extends VerticalLayout {
         seatsLeftH1.add(seatsLeft);
         datePickH1.add(datePick);
         priceH1.add(price);
-        flightGrid.addSelectionListener(e -> dialog.open());
+
+        flightGrid.asSingleSelect().addValueChangeListener(event -> {
+            toCity.setText(event.getValue().getToCity());
+        });
+        flightGrid.asSingleSelect().addValueChangeListener(event -> {
+            fromCity.setText((event.getValue().getFromCity()));
+        });
+        flightGrid.asSingleSelect().addValueChangeListener(event -> {
+            seatsLeft.setText(String.valueOf(event.getValue().getSeatsLeft()));
+        });
+        flightGrid.asSingleSelect().addValueChangeListener(event -> {
+            datePick.setText(DateFormatUtils.format(event.getValue().getDate(), "yyyy-MM-dd"));
+        });
+        flightGrid.asSingleSelect().addValueChangeListener(event -> {
+            price.setText(String.valueOf(event.getValue().getPrice()) + " $");
+        });
+
+
+        flightGrid.addSelectionListener(e -> {
+
+            dialog.open();
+        });
+
         dialog.add(toCityH1,
                 fromCityH1,
                 seatsLeftH1,
                 datePickH1,
                 priceH1,
                 layout);
-
-
     }
 
     private void buttonConfigure() {
@@ -114,6 +140,9 @@ public class FlightsList extends VerticalLayout {
         return toolbar;
     }
 
+    public Optional<Flight> returnId(){
+        return flightGrid.getSelectionModel().getFirstSelectedItem();
+    }
 
 }
 

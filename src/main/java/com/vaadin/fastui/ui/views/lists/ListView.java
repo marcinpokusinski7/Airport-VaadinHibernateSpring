@@ -84,7 +84,7 @@ public class ListView extends VerticalLayout {
     private void configureGrid() {
         grid.addClassName("customer-grid");
         grid.setSizeFull(); // full screen
-        grid.setColumns("customerId", "firstName", "lastName", "email", "phoneNumber"); // order columns by names
+        grid.setColumns("firstName", "lastName", "email", "phoneNumber"); // order columns by names
         grid.getColumns().forEach(col -> col.setAutoWidth(true)); // automatic width
 
         grid.asSingleSelect().addValueChangeListener(event -> editCustomer(event.getValue()));
@@ -110,5 +110,6 @@ public class ListView extends VerticalLayout {
     private void updateList() {
         grid.setItems(customerService.findAll(filterText.getValue()));
     }
+
 
 }

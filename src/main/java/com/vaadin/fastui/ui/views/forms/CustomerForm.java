@@ -64,7 +64,7 @@ public class CustomerForm extends FormLayout {
     private void validateAndSave() {
        try{
            binder.writeBean(customer);
-           fireEvent(new SaveEvent(this,customer));
+           fireEvent(new SaveEvent(this, customer));
        } catch (ValidationException e){
            e.printStackTrace();
        }
